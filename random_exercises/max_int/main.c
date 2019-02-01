@@ -7,11 +7,23 @@ int main()
 {
     int a, b, c;
     printf("Input the first integer:\n");
-    scanf("%d", &a);
+    if(scanf("%d", &a) < 1)
+    {
+        printf("Error: non-integer entered!");
+        return -1;
+    }
     printf("Input the second integer:\n");
-    scanf("%d", &b);
+    if(scanf("%d", &b) < 1)
+    {
+        printf("Error: non-integer entered!");
+        return -1;
+    }
     printf("Input the third character:\n");
-    scanf("%d", &c);
+    if(scanf("%d", &c) < 1)
+    {
+        printf("Error: non-integer entered!");
+        return -1;
+    }
     printLargest(a, b, c);
     return 0;
 }
