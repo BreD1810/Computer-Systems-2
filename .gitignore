@@ -1,3 +1,6 @@
+# Code workspaces
+*.code-workspace
+
 # Prerequisites
 *.d
 
