@@ -70,8 +70,8 @@ void init(void) {
 
 
 	/* ENABLE ENCODER INPUTS AND PULL-UPS */
-        DDRE &= ~_BV(ROTA) & ~_BV(ROTB); //Set both rotary encoder pins to input
-        PORTE |= _Bv(ROTA) | _BV(ROTB);
+        DDRE &= ~_BV(ROTA) & ~_BV(ROTB); /* Set both rotary encoder pins to input */
+        PORTE |= _BV(ROTA) | _BV(ROTB); 
 
 	/* Timer 0 for switch scan interrupt: */
 	TCCR0A = _BV(WGM01);
