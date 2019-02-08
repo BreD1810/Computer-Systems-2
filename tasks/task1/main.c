@@ -36,6 +36,7 @@ void main(void) {
 	init();
 
         /* ENABLE GLOBAL INTERRUPTS HERE */
+        sei();
 
 	for (;;) {
 		for (i=cnt; i > 0; --i) {
@@ -81,9 +82,10 @@ void init(void) {
 
 
         /* SET OCR0A FOR A 1 MS PERIOD */
-
+        OCR0A = 80000;
 
         /* ENABLE TIMER INTERRUPT */
+        TIMSK0 |= _BV(OCIE0A);
 
 }
 
