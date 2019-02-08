@@ -53,3 +53,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#Files I have added
+tasks/feedbackForm.txt
+tasks/feedbackSample.txt
+tasks/**/Makefile
