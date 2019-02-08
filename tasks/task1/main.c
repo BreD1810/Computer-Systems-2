@@ -14,6 +14,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include "main.h"
 
 
 #define STEP_DELAY_MS 5
@@ -69,7 +70,8 @@ void init(void) {
 
 
 	/* ENABLE ENCODER INPUTS AND PULL-UPS */
-        
+        DDRE &= ~_BV(ROTA) & ~_BV(ROTB); //Set both rotary encoder pins to input
+        PORTE |= _Bv(ROTA) | _BV(ROTB);
 
 	/* Timer 0 for switch scan interrupt: */
 	TCCR0A = _BV(WGM01);
