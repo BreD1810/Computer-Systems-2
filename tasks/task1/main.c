@@ -72,7 +72,7 @@ void init(void) {
 
 	/* ENABLE ENCODER INPUTS AND PULL-UPS */
         DDRE &= ~_BV(ROTA) & ~_BV(ROTB); /* Set both rotary encoder pins to input */
-        PORTE |= _BV(ROTA) | _BV(ROTB); 
+        PORTE |= _BV(ROTA) | _BV(ROTB);
 
 	/* Timer 0 for switch scan interrupt: */
 	TCCR0A = _BV(WGM01);
@@ -82,7 +82,7 @@ void init(void) {
 
 
         /* SET OCR0A FOR A 1 MS PERIOD */
-        OCR0A = 80000;
+        OCR0A = 8000;
 
         /* ENABLE TIMER INTERRUPT */
         TIMSK0 |= _BV(OCIE0A);
