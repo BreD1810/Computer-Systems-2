@@ -82,7 +82,8 @@ void init(void) {
 
 
         /* SET OCR0A FOR A 1 MS PERIOD */
-        OCR0A = 8000;
+        OCR0A = (uint8_t)(F_CPU / (64.0 * 1000) - 1); /* Compiler replaces with a constrant, also works between
+                                                        different clock speeds.  */
 
         /* ENABLE TIMER INTERRUPT */
         TIMSK0 |= _BV(OCIE0A);
