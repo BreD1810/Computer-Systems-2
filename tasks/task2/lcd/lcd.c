@@ -196,14 +196,20 @@ void display_char(char c)
     PGM_P fdata; 
     uint8_t bits, mask;
     uint16_t sc=display.x, ec=display.x + 4, sp=display.y, ep=display.y + 7;
-
-	if (c == '\n') /* If it's a newline */
+    
+    if (c == '\n') /* If it's a newline */
     {
         display.x = 0;
         display.y += 8;
+        if (display.y >= display.height) /*If it's off the screen*/
+        {
+            clear_screen(); 
+            display.x = 0;
+            display.y = 0;    
+        }
 		return;
     }
-	else if (c < 32 || c > 126) 
+	else if (c < 32 || c > 126) /* If it's not a alphanumberic character */
 	{
 		return;
 	}
