@@ -51,9 +51,9 @@ int8_t tasksNum = -1;
 
 const double tick_ms = 400.0;        /* Real time between ticks in ms */
 const uint32_t tasksPeriodGCD = 25;  /* Timer tick rate */
-const uint32_t period1 = 29;
-const uint32_t period2 = 77;
-const uint32_t period3 = 162;
+const uint32_t period1 = 25;
+const uint32_t period2 = 75;
+const uint32_t period3 = 150;
 
 int TickFct_1(int state);
 int TickFct_2(int state);
