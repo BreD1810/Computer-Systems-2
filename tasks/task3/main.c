@@ -74,6 +74,8 @@ ISR(TIMER1_COMPA_vect) {
           && (runningTasks[currentTask] > i) /* Task priority > current task priority */
           && (!tasks[i].running)             /* Task not already running (no self-preemption) */
          ) {
+         
+         LED_OFF; //Task is running - not idling
 
          cli();
          tasks[i].elapsedTime = 0;      /* Reset time since last tick */
@@ -93,6 +95,7 @@ ISR(TIMER1_COMPA_vect) {
       }
       tasks[i].elapsedTime += tasksPeriodGCD;
    }
+
 
    display_color(SEA_GREEN, BLACK);
    printf("-");
@@ -122,9 +125,10 @@ int main(void) {
    CLKPR = 0;
 
 
-   LED_INIT;
    init_lcd();
    init_processor();
+   LED_INIT;
+
 
 
    tasks[++tasksNum].state = -1;
@@ -147,7 +151,10 @@ int main(void) {
 
    sei();
 
-   while(1){};
+   while(1)
+   {
+      LED_ON; //CPU is idling - interrupts when a task has to run
+   };
 
 }
 
