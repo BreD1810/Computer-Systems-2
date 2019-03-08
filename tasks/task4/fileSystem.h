@@ -10,6 +10,8 @@
 #define EEPROM_START 
 #define TOTALBLOCKS = EEPROM_LENGTH/BLOCK_SIZE
 
+/*For each file, record the start, the length of the file,
+  and the current position within the file.*/
 typedef struct entry
 {
     uint8_t startBlock;
@@ -19,7 +21,7 @@ typedef struct entry
 
 typedef struct fs_meta
 {
-    directoryEntry dir[MAX_FILES];
+    directoryEntry dir[MAX_FILES]; /
 } metaData;
 
 void init_eepromfs();
