@@ -7,6 +7,8 @@ int blink(int);
 int update_dial(int);
 int collect_delta(int);
 int check_switches(int);
+void appendFileWithPosition();
+void printEndLines(uint8_t);
 
 
 FIL File;                   /* FAT File */
@@ -37,7 +39,7 @@ int collect_delta(int state) {
 int check_switches(int state) {
 
 	if (get_switch_press(_BV(SWN))) {
-			display_string("North\n");
+		display_string("North\n"); /* ORIGINAL CODE */
 	}
 
 	if (get_switch_press(_BV(SWE))) {
@@ -53,40 +55,31 @@ int check_switches(int state) {
 	}
 
 	if (get_switch_long(_BV(SWC))) {
-		f_mount(&FatFs, "", 0);
-		if (f_open(&File, "myfile.txt", FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) {
-			f_lseek(&File, f_size(&File));
-			f_printf(&File, "Encoder position is: %d \r\n", position);
-			f_close(&File);
-			display_string("Wrote position\n");
-		} else {
-			display_string("Can't write file! \n");
-		}
-
+		appendFileWithPosition();
 	}
 
 	if (get_switch_short(_BV(SWC))) {
-			display_string("[S] Centre\n");
+		display_string("[S] Centre\n");
 	}
 
 	if (get_switch_rpt(_BV(SWN))) {
-			display_string("[R] North\n");
+		display_string("[R] North\n");
 	}
 
 	if (get_switch_rpt(_BV(SWE))) {
-			display_string("[R] East\n");
+		display_string("[R] East\n");
 	}
 
 	if (get_switch_rpt(_BV(SWS))) {
-			display_string("[R] South\n");
+		display_string("[R] South\n");
 	}
 
 	if (get_switch_rpt(_BV(SWW))) {
-			display_string("[R] West\n");
+		display_string("[R] West\n");
 	}
 
 	if (get_switch_rpt(SWN)) {
-			display_string("[R] North\n");
+		//display_string("[R] North\n"); /* ORIGINAL CODE */
 	}
 
 
@@ -141,4 +134,17 @@ int blink(int state) {
 
 	os_led_brightness(level);
 	return state;
+}
+
+void appendFileWithPosition()
+{
+		f_mount(&FatFs, "", 0);
+		if (f_open(&File, "myfile.txt", FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) {
+			f_lseek(&File, f_size(&File));
+			f_printf(&File, "Encoder position is: %d \r\n", position);
+			f_close(&File);
+			display_string("Wrote position\n");
+		} else {
+			display_string("Can't write file! \n");
+		}
 }
