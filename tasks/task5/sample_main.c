@@ -2,6 +2,7 @@
 
 #include "os.h"
 
+#define MAX_LINE_BUFF 50
 
 int blink(int);
 int update_dial(int);
@@ -39,7 +40,8 @@ int collect_delta(int state) {
 int check_switches(int state) {
 
 	if (get_switch_press(_BV(SWN))) {
-		display_string("North\n"); /* ORIGINAL CODE */
+		// display_string("North\n"); /* ORIGINAL CODE */
+		printEndLines(25);
 	}
 
 	if (get_switch_press(_BV(SWE))) {
@@ -79,7 +81,7 @@ int check_switches(int state) {
 	}
 
 	if (get_switch_rpt(SWN)) {
-		//display_string("[R] North\n"); /* ORIGINAL CODE */
+		// display_string("[R] North\n"); /* ORIGINAL CODE */
 	}
 
 
@@ -144,6 +146,37 @@ void appendFileWithPosition()
 			f_printf(&File, "Encoder position is: %d \r\n", position);
 			f_close(&File);
 			display_string("Wrote position\n");
+		} else {
+			display_string("Can't write file! \n");
+		}
+}
+
+void printEndLines(uint8_t n)
+{
+	char line[n][MAX_LINE_BUFF]; //2d array to store 25 lines - to be used as a ring buffer.
+	f_mount(&FatFs, "", 0);
+		if (f_open(&File, "myfile.txt", FA_READ) == FR_OK) { //Open the file in read mode
+			
+			for (uint8_t i = 0; i < n; i++)
+			{
+				line[i][0] = '\0'; //Write the null character to each position to stop errors displaying string.
+			}
+
+			uint8_t i = 0;
+			while (f_gets(line[i], MAX_LINE_BUFF, &File)) //Read until no more lines
+			{
+				i++;
+				i %= n; //Get the remainder, aka reset to first position if reached the end.
+			}
+			
+			//Display all of the files in the ring buffer array
+			for (uint8_t j = 0; j < n; j++)
+			{
+				display_string(line[i++]);
+				i %= n;
+			}
+
+			f_close(&File);
 		} else {
 			display_string("Can't write file! \n");
 		}
