@@ -169,6 +169,8 @@ void printEndLines(uint8_t n)
 				i %= n; //Get the remainder, aka reset to first position if reached the end.
 			}
 			
+			clear_screen();
+
 			//Display all of the files in the ring buffer array
 			for (uint8_t j = 0; j < n; j++)
 			{
