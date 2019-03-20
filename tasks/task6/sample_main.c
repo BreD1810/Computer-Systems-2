@@ -11,6 +11,8 @@ int check_switches(int);
 void appendFileWithPosition();
 void printEndLines(uint8_t);
 
+void freeRam();
+
 
 FIL File;                   /* FAT File */
 
@@ -45,7 +47,8 @@ int check_switches(int state) {
 	}
 
 	if (get_switch_press(_BV(SWE))) {
-			display_string("East\n");
+			// display_string("East\n");
+		freeRam();
 	}
 
 	if (get_switch_press(_BV(SWS))) {
@@ -182,4 +185,13 @@ void printEndLines(uint8_t n)
 		} else {
 			display_string("Can't write file! \n");
 		}
+}
+
+void freeRam()
+{
+	extern int __heap_start, *__brkval;
+	int v;
+	char str[30];
+	sprintf(str, "Free RAM: %d\n", (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval));
+	display_string(str);
 }
